@@ -1,0 +1,2027 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MyCode</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f4f6f8;
+    color:#222;
+    min-height:100vh;
+    transition:.2s;
+}
+
+body.dark{
+    background:#15171a;
+    color:#eee;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:245px;
+    height:100vh;
+    background:#fff;
+    border-right:1px solid #ddd;
+    padding:20px;
+    z-index:50;
+}
+
+.dark .sidebar{
+    background:#1e2125;
+    border-color:#333;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:30px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.nav button{
+    border:none;
+    background:transparent;
+    color:inherit;
+    text-align:left;
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:#e9edf2;
+}
+
+.dark .nav button:hover,
+.dark .nav button.active{
+    background:#30343a;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    right:20px;
+}
+
+.sidebar-bottom button{
+    width:100%;
+}
+
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.menu-btn{
+    display:none;
+    border:none;
+    background:#222;
+    color:#fff;
+    padding:10px 13px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.dark .menu-btn{
+    background:#444;
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#4d7cff;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+
+/* SECTIONS */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#4d7cff,#7257e8);
+    color:#fff;
+    border-radius:18px;
+    padding:35px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    opacity:.9;
+}
+
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:20px;
+}
+
+.dark .stat{
+    background:#1e2125;
+    border-color:#333;
+}
+
+.stat-number{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+
+/* TOOLBAR */
+
+.toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.search{
+    flex:1;
+    min-width:200px;
+    padding:13px 15px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:15px;
+    background:#fff;
+    color:#222;
+}
+
+.dark .search{
+    background:#1e2125;
+    color:#fff;
+    border-color:#444;
+}
+
+.primary{
+    border:none;
+    background:#4d7cff;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.primary:hover{
+    opacity:.9;
+}
+
+.secondary{
+    border:none;
+    background:#e9edf2;
+    color:#222;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.dark .secondary{
+    background:#30343a;
+    color:#fff;
+}
+
+
+/* FILE GRID */
+
+.file-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fill,minmax(240px,1fr));
+    gap:15px;
+}
+
+.file-card{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:18px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.dark .file-card{
+    background:#1e2125;
+    border-color:#333;
+}
+
+.file-card:hover{
+    transform:translateY(-2px);
+}
+
+.file-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.file-name{
+    font-size:17px;
+    font-weight:bold;
+    word-break:break-word;
+}
+
+.file-info{
+    color:#777;
+    font-size:13px;
+    margin-top:7px;
+}
+
+
+/* EDITOR */
+
+.editor{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.dark .editor{
+    background:#1e2125;
+    border-color:#333;
+}
+
+.editor-top{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.dark .editor-top{
+    border-color:#333;
+}
+
+.filename{
+    flex:1;
+    min-width:160px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:10px;
+    background:#fff;
+    color:#222;
+}
+
+.dark .filename{
+    background:#15171a;
+    color:#fff;
+    border-color:#444;
+}
+
+.language{
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:10px;
+    background:#fff;
+    color:#222;
+}
+
+.dark .language{
+    background:#15171a;
+    color:#fff;
+    border-color:#444;
+}
+
+.code-editor{
+    width:100%;
+    min-height:500px;
+    resize:vertical;
+    border:none;
+    outline:none;
+    padding:18px;
+    background:#101216;
+    color:#eee;
+    font-family:
+        "Courier New",
+        monospace;
+    font-size:14px;
+    line-height:1.6;
+    tab-size:4;
+}
+
+.editor-bottom{
+    padding:12px;
+    border-top:1px solid #333;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.code-info{
+    color:#888;
+    font-size:13px;
+}
+
+
+/* PREVIEW */
+
+.preview-box{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.dark .preview-box{
+    background:#1e2125;
+    border-color:#333;
+}
+
+.preview-header{
+    padding:14px 18px;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.dark .preview-header{
+    border-color:#333;
+}
+
+.preview-frame{
+    width:100%;
+    height:550px;
+    border:none;
+    background:#fff;
+}
+
+
+/* EMPTY */
+
+.empty{
+    background:#fff;
+    border:1px dashed #bbb;
+    border-radius:15px;
+    padding:50px 20px;
+    text-align:center;
+    color:#777;
+}
+
+.dark .empty{
+    background:#1e2125;
+    border-color:#555;
+    color:#aaa;
+}
+
+.empty-icon{
+    font-size:50px;
+    margin-bottom:12px;
+}
+
+
+/* SETTINGS */
+
+.setting{
+    background:#fff;
+    border:1px solid #ddd;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.dark .setting{
+    background:#1e2125;
+    border-color:#333;
+}
+
+.setting button{
+    border:none;
+    background:#4d7cff;
+    color:#fff;
+    padding:9px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#222;
+    color:#fff;
+    padding:13px 18px;
+    border-radius:10px;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(10px);
+    transition:.2s;
+    z-index:100;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.2s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        padding:20px;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:25px;
+    }
+
+    .hero h1{
+        font-size:27px;
+    }
+
+    .code-editor{
+        min-height:400px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        💻 MyCode
+    </div>
+
+    <div class="nav">
+
+        <button
+            class="active"
+            onclick="showSection('home',this)">
+            🏠 Home
+        </button>
+
+        <button
+            onclick="showSection('files',this)">
+            📁 My Code
+        </button>
+
+        <button
+            onclick="newFile()">
+            ➕ New File
+        </button>
+
+        <button
+            onclick="showSection('preview',this)">
+            ▶️ Preview
+        </button>
+
+        <button
+            onclick="showSection('settings',this)">
+            ⚙️ Settings
+        </button>
+
+    </div>
+
+    <div class="sidebar-bottom">
+
+        <button
+            class="nav"
+            onclick="goToMyWorld()">
+            🌎 MyWorld
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <button
+            class="menu-btn"
+            onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div></div>
+
+        <div class="user-area">
+
+            <span>
+                MyCode
+            </span>
+
+            <div class="avatar">
+                💻
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HOME -->
+
+    <section
+        class="section active"
+        id="home">
+
+        <div class="hero">
+
+            <h1>
+                💻 MyCode
+            </h1>
+
+            <p>
+                Your personal workspace for
+                creating and managing code.
+            </p>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="fileCount">
+                    0
+                </div>
+
+                <div>
+                    Code Files
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="htmlCount">
+                    0
+                </div>
+
+                <div>
+                    HTML Files
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="lineCount">
+                    0
+                </div>
+
+                <div>
+                    Lines of Code
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                class="search"
+                id="homeSearch"
+                placeholder="Search your code..."
+                oninput="renderFiles()"
+            >
+
+            <button
+                class="primary"
+                onclick="newFile()">
+                ➕ New File
+            </button>
+
+        </div>
+
+
+        <div id="homeFiles"></div>
+
+    </section>
+
+
+    <!-- FILES -->
+
+    <section
+        class="section"
+        id="files">
+
+        <div class="hero">
+
+            <h1>
+                📁 My Code
+            </h1>
+
+            <p>
+                Your saved code projects.
+            </p>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                class="search"
+                id="filesSearch"
+                placeholder="Search files..."
+                oninput="renderFiles()"
+            >
+
+            <button
+                class="primary"
+                onclick="newFile()">
+                ➕ New File
+            </button>
+
+        </div>
+
+
+        <div id="fileList"></div>
+
+    </section>
+
+
+    <!-- EDITOR -->
+
+    <section
+        class="section"
+        id="editor">
+
+        <div class="hero">
+
+            <h1 id="editorHeading">
+                💻 New Code File
+            </h1>
+
+            <p>
+                Write and save your code.
+            </p>
+
+        </div>
+
+
+        <div class="editor">
+
+
+            <div class="editor-top">
+
+                <input
+                    class="filename"
+                    id="filename"
+                    placeholder="filename.html"
+                    maxlength="100"
+                >
+
+
+                <select
+                    class="language"
+                    id="language"
+                    onchange="updateTemplate()">
+
+                    <option value="html">
+                        HTML
+                    </option>
+
+                    <option value="css">
+                        CSS
+                    </option>
+
+                    <option value="javascript">
+                        JavaScript
+                    </option>
+
+                    <option value="text">
+                        Text
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <textarea
+                class="code-editor"
+                id="codeEditor"
+                spellcheck="false"
+                oninput="updateEditorStats()"
+            ></textarea>
+
+
+            <div class="editor-bottom">
+
+                <div
+                    class="code-info"
+                    id="editorStats">
+                    0 lines · 0 characters
+                </div>
+
+
+                <div
+                    style="display:flex;gap:10px;flex-wrap:wrap;">
+
+                    <button
+                        class="secondary"
+                        onclick="cancelEditor()">
+                        Cancel
+                    </button>
+
+                    <button
+                        class="primary"
+                        onclick="saveFile()">
+                        💾 Save
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PREVIEW -->
+
+    <section
+        class="section"
+        id="preview">
+
+        <div class="hero">
+
+            <h1>
+                ▶️ Preview
+            </h1>
+
+            <p>
+                Run your HTML code directly in MyCode.
+            </p>
+
+        </div>
+
+
+        <div class="preview-box">
+
+            <div class="preview-header">
+
+                <strong>
+                    HTML Preview
+                </strong>
+
+                <button
+                    class="primary"
+                    onclick="runPreview()">
+                    ▶️ Run
+                </button>
+
+            </div>
+
+
+            <iframe
+                class="preview-frame"
+                id="previewFrame"
+                sandbox="allow-scripts">
+            </iframe>
+
+        </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+
+    <section
+        class="section"
+        id="settings">
+
+        <div class="hero">
+
+            <h1>
+                ⚙️ Settings
+            </h1>
+
+            <p>
+                Customize MyCode.
+            </p>
+
+        </div>
+
+
+        <div class="setting">
+
+            <div>
+
+                <strong>
+                    Dark Mode
+                </strong>
+
+                <p
+                    style="margin-top:4px;color:#777;">
+                    Change the appearance of MyCode.
+                </p>
+
+            </div>
+
+            <button
+                onclick="toggleDarkMode()">
+                Toggle
+            </button>
+
+        </div>
+
+
+        <div class="setting">
+
+            <div>
+
+                <strong>
+                    Delete All Code
+                </strong>
+
+                <p
+                    style="margin-top:4px;color:#777;">
+                    Permanently remove all saved files.
+                </p>
+
+            </div>
+
+            <button
+                onclick="deleteAllFiles()">
+                Clear
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+
+const STORAGE_KEY =
+    "MyCode_files";
+
+
+let files=[];
+
+let editingId=null;
+
+
+/* =========================
+   LOAD
+========================= */
+
+function loadFiles(){
+
+    try{
+
+        files =
+            JSON.parse(
+                localStorage.getItem(
+                    STORAGE_KEY
+                )
+            ) || [];
+
+    }
+    catch(error){
+
+        files=[];
+
+    }
+
+    renderFiles();
+
+}
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function saveStorage(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(files)
+    );
+
+}
+
+
+/* =========================
+   NEW FILE
+========================= */
+
+function newFile(){
+
+    editingId=null;
+
+
+    document.getElementById(
+        "editorHeading"
+    ).textContent=
+        "💻 New Code File";
+
+
+    document.getElementById(
+        "filename"
+    ).value=
+        "index.html";
+
+
+    document.getElementById(
+        "language"
+    ).value=
+        "html";
+
+
+    document.getElementById(
+        "codeEditor"
+    ).value=
+        getTemplate("html");
+
+
+    updateEditorStats();
+
+
+    showSectionById("editor");
+
+
+    setTimeout(()=>{
+
+        document.getElementById(
+            "filename"
+        ).focus();
+
+    },100);
+
+}
+
+
+/* =========================
+   EDIT FILE
+========================= */
+
+function editFile(id){
+
+    const file =
+        files.find(
+            item=>item.id===id
+        );
+
+    if(!file){
+        return;
+    }
+
+
+    editingId=id;
+
+
+    document.getElementById(
+        "editorHeading"
+    ).textContent=
+        "✏️ Edit Code";
+
+
+    document.getElementById(
+        "filename"
+    ).value=
+        file.name;
+
+
+    document.getElementById(
+        "language"
+    ).value=
+        file.language;
+
+
+    document.getElementById(
+        "codeEditor"
+    ).value=
+        file.code;
+
+
+    updateEditorStats();
+
+
+    showSectionById("editor");
+
+}
+
+
+/* =========================
+   SAVE FILE
+========================= */
+
+function saveFile(){
+
+    let name =
+        document.getElementById(
+            "filename"
+        ).value.trim();
+
+
+    const code =
+        document.getElementById(
+            "codeEditor"
+        ).value;
+
+
+    const language =
+        document.getElementById(
+            "language"
+        ).value;
+
+
+    if(!name){
+
+        name=
+            language==="html"
+            ? "index.html"
+            : "untitled."+getExtension(language);
+
+    }
+
+
+    if(editingId){
+
+        const file =
+            files.find(
+                item=>item.id===editingId
+            );
+
+
+        if(file){
+
+            file.name=name;
+            file.code=code;
+            file.language=language;
+            file.updated=Date.now();
+
+        }
+
+
+        showToast(
+            "Code file updated!"
+        );
+
+    }
+    else{
+
+        files.unshift({
+
+            id:
+                Date.now().toString()
+                +
+                Math.random()
+                    .toString(36)
+                    .slice(2),
+
+            name:name,
+
+            code:code,
+
+            language:language,
+
+            created:Date.now(),
+
+            updated:Date.now()
+
+        });
+
+
+        showToast(
+            "Code file saved!"
+        );
+
+    }
+
+
+    saveStorage();
+
+    editingId=null;
+
+    renderFiles();
+
+    showSectionById("files");
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteFile(id){
+
+    const file =
+        files.find(
+            item=>item.id===id
+        );
+
+
+    if(!file){
+        return;
+    }
+
+
+    if(
+        !confirm(
+            'Delete "'+
+            file.name+
+            '"?'
+        )
+    ){
+        return;
+    }
+
+
+    files=
+        files.filter(
+            item=>item.id!==id
+        );
+
+
+    saveStorage();
+
+    renderFiles();
+
+    showToast(
+        "File deleted."
+    );
+
+}
+
+
+/* =========================
+   DELETE ALL
+========================= */
+
+function deleteAllFiles(){
+
+    if(!files.length){
+
+        showToast(
+            "There are no saved files."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !confirm(
+            "Delete ALL "+
+            files.length+
+            " code files?"
+        )
+    ){
+        return;
+    }
+
+
+    files=[];
+
+    saveStorage();
+
+    renderFiles();
+
+    showToast(
+        "All code files deleted."
+    );
+
+}
+
+
+/* =========================
+   RENDER FILES
+========================= */
+
+function renderFiles(){
+
+    const homeSearch =
+        (
+            document.getElementById(
+                "homeSearch"
+            ).value || ""
+        ).toLowerCase();
+
+
+    const filesSearch =
+        (
+            document.getElementById(
+                "filesSearch"
+            ).value || ""
+        ).toLowerCase();
+
+
+    const search =
+        homeSearch || filesSearch;
+
+
+    const filtered =
+        files
+            .filter(file=>
+                file.name
+                    .toLowerCase()
+                    .includes(search)
+                ||
+                file.code
+                    .toLowerCase()
+                    .includes(search)
+            )
+            .sort(
+                (a,b)=>
+                    b.updated-a.updated
+            );
+
+
+    updateStats();
+
+
+    renderFileContainer(
+        document.getElementById(
+            "homeFiles"
+        ),
+        filtered.slice(0,8)
+    );
+
+
+    renderFileContainer(
+        document.getElementById(
+            "fileList"
+        ),
+        filtered
+    );
+
+}
+
+
+/* =========================
+   FILE CARDS
+========================= */
+
+function renderFileContainer(
+    container,
+    list
+){
+
+    if(!list.length){
+
+        container.innerHTML=`
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    💻
+                </div>
+
+                <h3>
+                    No code files found
+                </h3>
+
+                <p style="margin-top:7px;">
+                    Create your first code file
+                    to get started.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const grid =
+        document.createElement(
+            "div"
+        );
+
+
+    grid.className=
+        "file-grid";
+
+
+    list.forEach(file=>{
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className=
+            "file-card";
+
+
+        card.innerHTML=`
+
+            <div class="file-icon">
+                ${getIcon(file.language)}
+            </div>
+
+            <div class="file-name"></div>
+
+            <div class="file-info">
+                ${file.language.toUpperCase()}
+                ·
+                ${file.code.length} chars
+                <br>
+                ${formatDate(file.updated)}
+            </div>
+
+        `;
+
+
+        card.querySelector(
+            ".file-name"
+        ).textContent=
+            file.name;
+
+
+        card.onclick=()=>{
+
+            editFile(file.id);
+
+        };
+
+
+        card.oncontextmenu=(event)=>{
+
+            event.preventDefault();
+
+            deleteFile(file.id);
+
+        };
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    container.innerHTML="";
+
+    container.appendChild(grid);
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+    document.getElementById(
+        "fileCount"
+    ).textContent=
+        files.length;
+
+
+    document.getElementById(
+        "htmlCount"
+    ).textContent=
+        files.filter(
+            file=>
+                file.language==="html"
+        ).length;
+
+
+    const lines =
+        files.reduce(
+            (total,file)=>{
+
+                return total+
+                    file.code
+                        .split("\n")
+                        .length;
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "lineCount"
+    ).textContent=
+        lines;
+
+}
+
+
+/* =========================
+   EDITOR STATS
+========================= */
+
+function updateEditorStats(){
+
+    const code =
+        document.getElementById(
+            "codeEditor"
+        ).value;
+
+
+    const lines =
+        code
+            ? code.split("\n").length
+            : 0;
+
+
+    document.getElementById(
+        "editorStats"
+    ).textContent=
+        lines+
+        " lines · "+
+        code.length+
+        " characters";
+
+}
+
+
+/* =========================
+   TEMPLATES
+========================= */
+
+function getTemplate(language){
+
+    if(language==="html"){
+
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Website</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    padding:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Hello from MyCode!</h1>
+
+<p>
+Start building your website here.
+</p>
+
+</body>
+</html>`;
+
+    }
+
+
+    if(language==="css"){
+
+        return `body{
+    font-family:Arial,sans-serif;
+}
+
+`;
+
+    }
+
+
+    if(language==="javascript"){
+
+        return `console.log("Hello from MyCode!");
+
+`;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================
+   UPDATE TEMPLATE
+========================= */
+
+function updateTemplate(){
+
+    const language =
+        document.getElementById(
+            "language"
+        ).value;
+
+
+    const editor =
+        document.getElementById(
+            "codeEditor"
+        );
+
+
+    if(
+        !editor.value.trim()
+        ||
+        confirm(
+            "Replace the current code with the "+
+            language.toUpperCase()+
+            " starter template?"
+        )
+    ){
+
+        editor.value=
+            getTemplate(language);
+
+        updateEditorStats();
+
+    }
+
+
+    const filename =
+        document.getElementById(
+            "filename"
+        );
+
+
+    if(!filename.value.trim()){
+
+        filename.value=
+            language==="html"
+            ? "index.html"
+            : "untitled."+
+                getExtension(language);
+
+    }
+
+}
+
+
+/* =========================
+   EXTENSIONS
+========================= */
+
+function getExtension(language){
+
+    if(language==="html"){
+        return "html";
+    }
+
+    if(language==="css"){
+        return "css";
+    }
+
+    if(language==="javascript"){
+        return "js";
+    }
+
+    return "txt";
+
+}
+
+
+/* =========================
+   ICONS
+========================= */
+
+function getIcon(language){
+
+    if(language==="html"){
+        return "🌐";
+    }
+
+    if(language==="css"){
+        return "🎨";
+    }
+
+    if(language==="javascript"){
+        return "⚡";
+    }
+
+    return "📄";
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(timestamp){
+
+    return new Date(
+        timestamp
+    ).toLocaleString(
+        [],
+        {
+            dateStyle:"medium",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+/* =========================
+   CANCEL
+========================= */
+
+function cancelEditor(){
+
+    editingId=null;
+
+    showSectionById("files");
+
+}
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+function runPreview(){
+
+    const code =
+        document.getElementById(
+            "codeEditor"
+        ).value;
+
+
+    if(!code.trim()){
+
+        showToast(
+            "There is no code to preview."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "previewFrame"
+    ).srcdoc=code;
+
+
+    showSectionById("preview");
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showSection(
+    section,
+    button
+){
+
+    showSectionById(
+        section
+    );
+
+
+    document
+        .querySelectorAll(
+            ".nav button"
+        )
+        .forEach(item=>{
+            item.classList.remove(
+                "active"
+            );
+        });
+
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if(window.innerWidth<=800){
+
+        document
+            .getElementById(
+                "sidebar"
+            )
+            .classList.remove(
+                "open"
+            );
+
+    }
+
+
+    renderFiles();
+
+}
+
+
+/* =========================
+   SECTION BY ID
+========================= */
+
+function showSectionById(section){
+
+    document
+        .querySelectorAll(
+            ".section"
+        )
+        .forEach(item=>{
+            item.classList.remove(
+                "active"
+            );
+        });
+
+
+    document
+        .getElementById(
+            section
+        )
+        .classList.add(
+            "active"
+        );
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleDarkMode(){
+
+    document.body
+        .classList.toggle(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        "myCodeDarkMode",
+        document.body
+            .classList
+            .contains("dark")
+    );
+
+}
+
+
+if(
+    localStorage.getItem(
+        "myCodeDarkMode"
+    )==="true"
+){
+
+    document.body
+        .classList
+        .add("dark");
+
+}
+
+
+/* =========================
+   MYWORLD
+========================= */
+
+function goToMyWorld(){
+
+    window.location.href=
+        "https://lazerman202.github.io/MyWorld/";
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent=
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove(
+            "show"
+        );
+
+    },2500);
+
+}
+
+
+/* =========================
+   KEYBOARD SHORTCUTS
+========================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            (event.ctrlKey ||
+             event.metaKey)
+            &&
+            event.key==="s"
+        ){
+
+            event.preventDefault();
+
+            saveFile();
+
+        }
+
+        if(
+            (event.ctrlKey ||
+             event.metaKey)
+            &&
+            event.key==="Enter"
+        ){
+
+            event.preventDefault();
+
+            runPreview();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   START
+========================= */
+
+loadFiles();
+
+</script>
+
+</body>
+</html>
+```
